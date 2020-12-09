@@ -23,7 +23,11 @@ def main():
         author="synodriver",
         author_email="diguohuangjiajinweijun@gmail.com",
         python_requires=">=3.7",
-        install_requires=["aiohttp", "lxml"],
+        extras_require={"all": ["redis", "motor", "aiomysql"],
+                        "mysql": ["aiomysql"],
+                        "mongodb": ["motor"],
+                        "redis": ["redis"]
+                        },
         license='GPLv3',
         classifiers=[
             "Framework :: AsyncIO",

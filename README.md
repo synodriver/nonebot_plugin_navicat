@@ -20,6 +20,23 @@
 ``` {.sourceCode .bash}
 pip install nonebot-plugin-navicat
 ```
+- 我全都要
+``` {.sourceCode .bash}
+pip install nonebot-plugin-navicat[all]
+```
+- 要使用mysql
+``` {.sourceCode .bash}
+pip install nonebot-plugin-navicat[mysql]
+```
+- 要使用mongodb
+``` {.sourceCode .bash}
+pip install nonebot-plugin-navicat[mongodb]
+```
+- 要使用redis
+``` {.sourceCode .bash}
+pip install nonebot-plugin-navicat[redis]
+```
+
 
 - 在 nonebot2 项目中设置 load_plugin()
 
