@@ -1,5 +1,5 @@
 # nonebot_plugin_navicat
-[![pypi](https://img.shields.io/pypi/v/nonebot-plugin-navicat.svg)](https://pypi.org/project/nonebot_plugi_navicat/) 
+[![pypi](https://img.shields.io/pypi/v/nonebot-plugin-navicat.svg)](https://pypi.org/project/nonebot_plugin_navicat/) 
 ![implementation](https://img.shields.io/pypi/implementation/nonebot-plugin-navicat)
 ![wheel](https://img.shields.io/pypi/wheel/nonebot-plugin-navicat)
 ![python](https://img.shields.io/pypi/pyversions/nonebot-plugin-navicat)
