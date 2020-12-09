@@ -45,7 +45,6 @@ nonebot.load_plugin('nonebot_plugi_navicat')
 ```
 
 - 参照下文在 nonebot2 项目的环境文件 .env.\* 中添加配置项
-- 使用时at搜图即可
 
 ## 配置项
 配置数据库连接
@@ -69,6 +68,14 @@ REDIS_PASSWORD
 REDIS_DB
 
 # 以后会加入更多数据库支持
+```
+## 导出给其他插件
+
+```{.sourceCode .python}
+export = nonebot.require("nonebot_plugin_navicat")
+export.mysql_pool # mysql的
+export.mongodb_client # mongodb的
+export.redis_client # redis的
 ```
 
 ## 特别感谢
