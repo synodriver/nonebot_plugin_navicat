@@ -41,7 +41,7 @@ pip install nonebot-plugin-navicat[redis]
 - 在 nonebot2 项目中设置 load_plugin()
 
 ``` {.sourceCode .python}
-nonebot.load_plugin('nonebot_plugi_navicat')
+nonebot.load_plugin('nonebot_plugin_navicat')
 ```
 
 - 参照下文在 nonebot2 项目的环境文件 .env.\* 中添加配置项
