@@ -7,10 +7,18 @@ import traceback
 
 import nonebot
 from nonebot import on_command, require
+from nonebot.rule import Rule
 from nonebot.adapters.cqhttp import Bot, Event
 
-sql = on_command("super sql")
 config: nonebot.config.Config = nonebot.get_driver().config
+
+
+@Rule
+async def config_checker(bot: Bot, event: Event, state: dict) -> bool:
+    return True if config.navicat_execute_sql else False
+
+
+sql = on_command("super sql", rule=config_checker)
 
 
 @sql.handle()

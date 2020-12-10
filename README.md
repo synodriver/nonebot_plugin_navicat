@@ -78,6 +78,14 @@ export.mongodb_client # mongodb的
 export.redis_client # redis的
 ```
 
+## 直接查询数据库
+- 危险功能! 在配置中启用```NAVICAT_EXECUTE_SQL=true```来开启
+- 使用方法:发送```super sql + sql```来查询
+```
+super sql
+show databases
+```
+
 ## 特别感谢
 
 - [Mrs4s / go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
