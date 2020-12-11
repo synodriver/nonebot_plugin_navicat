@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-对外导出mongodb连接
+对外导出redis连接
 """
 import nonebot
 
