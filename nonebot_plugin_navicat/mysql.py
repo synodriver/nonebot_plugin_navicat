@@ -3,11 +3,7 @@
 对外导出mysql连接
 """
 import nonebot
-
-try:
-    import aiomysql
-except ImportError:
-    aiomysql = None
+from databases import Database
 
 driver: nonebot.Driver = nonebot.get_driver()
 config: nonebot.config.Config = driver.config
@@ -19,13 +15,9 @@ mysql_opened: bool = False
 async def connect_to_mysql():
     global mysql_opened
     if config.mysql_host is not None:
-        nonebot.require("nonebot_plugin_navicat").mysql_pool = await aiomysql.create_pool(
-            host=config.mysql_host,
-            port=config.mysql_port,
-            user=config.mysql_user,
-            password=config.mysql_password,
-            charset="utf8",
-            autocommit=True)
+        mysql_pool = Database(f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}")
+        await mysql_pool.connect()
+        nonebot.require("nonebot_plugin_navicat").mysql_pool = mysql_pool
         mysql_opened = True
         nonebot.logger.info("connect to mysql")
 
@@ -34,8 +26,7 @@ async def connect_to_mysql():
 async def free_db():
     global mysql_opened
     if mysql_opened:
-        pool: aiomysql.Pool = nonebot.require("nonebot_plugin_navicat").mysql_pool
-        pool.close()
-        await pool.wait_closed()
+        mysql_pool = nonebot.require("nonebot_plugin_navicat").mysql_pool
+        await mysql_pool.disconnect()
         mysql_opened = False
         nonebot.logger.info("disconnect to mysql")

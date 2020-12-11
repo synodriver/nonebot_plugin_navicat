@@ -28,6 +28,14 @@ pip install nonebot-plugin-navicat[all]
 ``` {.sourceCode .bash}
 pip install nonebot-plugin-navicat[mysql]
 ```
+- 要使用postgresql
+``` {.sourceCode .bash}
+pip install nonebot-plugin-navicat[postgresql]
+```
+- 要使用sqlite
+``` {.sourceCode .bash}
+pip install nonebot-plugin-navicat[sqlite]
+```
 - 要使用mongodb
 ``` {.sourceCode .bash}
 pip install nonebot-plugin-navicat[mongodb]
@@ -50,22 +58,31 @@ nonebot.load_plugin('nonebot_plugin_navicat')
 配置数据库连接
 ```
 # mysql 如果有MYSQL_HOST则表示要进行mysql连接
-MYSQL_HOST
-MYSQL_PORT
-MYSQL_USER
-MYSQL_PASSWORD
+MYSQL_HOST=
+MYSQL_PORT=
+MYSQL_USER=
+MYSQL_PASSWORD=
+
+# postgresql 如果有PGSQL_HOST则表示要进行postgresql连接
+PGSQL_HOST=
+PGSQL_PORT=
+PGSQL_USER=
+PGSQL_PASSWORD=
+
+# sqlite 如果有SQLITE_HOST则表示要进行sqlite连接 这里是路径
+SQLITE_HOST=
 
 # mongodb 如果有MONGODB_HOST则表示要进行mongodb连接
-MONGODB_HOST
-MONGODB_PORT
-MONGODB_USER
-MONGODB_PASSWORD
+MONGODB_HOST=
+MONGODB_PORT=
+MONGODB_USER=
+MONGODB_PASSWORD=
 
 # redis 如果有REDIS_HOST则表示要进行redis连接
-REDIS_HOST
-REDIS_PORT
-REDIS_PASSWORD
-REDIS_DB
+REDIS_HOST=
+REDIS_PORT=
+REDIS_PASSWORD=
+REDIS_DB=
 
 # 以后会加入更多数据库支持
 ```
@@ -74,18 +91,22 @@ REDIS_DB
 ```{.sourceCode .python}
 export = nonebot.require("nonebot_plugin_navicat")
 export.mysql_pool # mysql的
+export.pgsql_pool # postgresql的
+export.sqlite_pool #sqlite的
 export.mongodb_client # mongodb的
 export.redis_client # redis的
 ```
 
-## 直接查询数据库
+## 直接查询数据库 (0.2.0中已删除)
 - 危险功能! 在配置中启用```NAVICAT_EXECUTE_SQL=true```来开启
-- 使用方法:发送```super sql + sql```来查询
+- 使用方法:发送```super ${dbname} + sql```来查询
 ```
-super sql
+super mysql
 show databases
 ```
-
+## 更新记录
+- v0.2.0 使用 [databases](https://github.com/encode/databases/) 代替直接连接,有了广泛的通用性
+- 移除了直接命令行查询数据库的功能,迁移到了单独的一个插件里面 *[nonebot-plugin-super](https://github.com/synodriver/nonebot_plugin_super)*
 ## 特别感谢
 
 - [Mrs4s / go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
@@ -93,5 +114,6 @@ show databases
 
 ## 优化建议
 
-- 来个postgresql支持?
+- bug report
+- more databases support
 ![](https://i.pixiv.cat/img-original/img/2018/08/29/00/16/10/70434240_p0.png "bug哪里跑 看姐姐给你们全抓起来~")

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 以命令行执行sql查询
-"""
+
+
+
 import json
 import traceback
 
@@ -18,7 +20,7 @@ async def config_checker(bot: Bot, event: Event, state: dict) -> bool:
     return True if config.navicat_execute_sql else False
 
 
-sql = on_command("super sql", rule=config_checker)
+sql = on_command("super", rule=config_checker)
 
 
 @sql.handle()
@@ -28,12 +30,12 @@ async def handle_sql(bot: Bot, event: Event, state: dict):
         return
     if event.message:
         data = event.message
-        sql_: str = str(data[0]).strip()  # 要执行的查询语句
+        db_type, sql_ = str(data[0]).strip().split("\r\n")  # mysql   show databases
+        pool_name = db_type + "_pool"  # mysql_pool pgsql_pool
         try:
-            async with export.mysql_pool.acquire() as conn:
-                async with conn.cursor() as cursor:
-                    await cursor.execute(sql_)
-                    data = await cursor.fetchall()
-            await bot.send(event, json.dumps(data, ensure_ascii=False))
+            rows = await getattr(export, pool_name).fetch_all(sql_)
+            rows = list(map(list, rows))
+            await bot.send(event, json.dumps(rows, ensure_ascii=False))
         except Exception:
             await bot.send(event, traceback.format_exc())
+"""
