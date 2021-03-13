@@ -10,14 +10,17 @@ config: nonebot.config.Config = driver.config
 
 mysql_opened: bool = False
 
+if config.mysql_host:
+    mysql_pool = Database(
+        f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}")
+    nonebot.export().mysql_pool = mysql_pool
+
 
 @driver.on_startup
 async def connect_to_mysql():
     global mysql_opened
-    if config.mysql_host is not None:
-        mysql_pool = Database(f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}")
+    if config.mysql_host:
         await mysql_pool.connect()
-        nonebot.require("nonebot_plugin_navicat").mysql_pool = mysql_pool
         mysql_opened = True
         nonebot.logger.info("connect to mysql")
 
@@ -26,7 +29,6 @@ async def connect_to_mysql():
 async def free_db():
     global mysql_opened
     if mysql_opened:
-        mysql_pool = nonebot.require("nonebot_plugin_navicat").mysql_pool
         await mysql_pool.disconnect()
         mysql_opened = False
         nonebot.logger.info("disconnect to mysql")

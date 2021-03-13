@@ -5,7 +5,7 @@ packages = find_packages(exclude=('test', 'tests.*', "test*"))
 
 
 def get_dis():
-    with open("README.md", "r", encoding="utf-8") as f:
+    with open("README.markdown", "r", encoding="utf-8") as f:
         return f.read()
 
 
@@ -39,6 +39,7 @@ def main():
             "Programming Language :: Python",
             "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: Implementation :: CPython"
         ],
         include_package_data=True
