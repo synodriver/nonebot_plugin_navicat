@@ -13,7 +13,7 @@ def main():
     dis = get_dis()
     setup(
         name="nonebot-plugin-navicat",
-        version="0.2.0",
+        version="0.2.1",
         url="https://github.com/synodriver/nonebot_plugin_navicat",
         packages=packages,
         keywords=["nonebot"],
@@ -24,13 +24,18 @@ def main():
         author_email="diguohuangjiajinweijun@gmail.com",
         python_requires=">=3.7",
         install_requires=["nonebot2", "databases"],
-        extras_require={"all": ["redis", "motor", "aiomysql", "asyncpg", "aiosqlite"],
-                        "mysql": ["aiomysql"],
-                        "postgresql": ["asyncpg"],
-                        "sqlite": ["aiosqlite"],
-                        "mongodb": ["motor"],
-                        "redis": ["redis"]
-                        },
+        extras_require={
+            "all": ["redis", "redis-py-cluster",
+                    "motor",
+                    "aiomysql", "asyncpg", "aiosqlite",
+                    "elasticsearch", "aiohttp"],
+            "mysql": ["aiomysql"],
+            "postgresql": ["asyncpg"],
+            "sqlite": ["aiosqlite"],
+            "mongodb": ["motor"],
+            "redis": ["redis", "redis-py-cluster"],
+            "elasticsearch": ["elasticsearch", "aiohttp"]
+        },
         license="GPLv3",
         classifiers=[
             "Framework :: AsyncIO",

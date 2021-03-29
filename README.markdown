@@ -79,10 +79,26 @@ MONGODB_USER=
 MONGODB_PASSWORD=
 
 # redis 如果有REDIS_HOST则表示要进行redis连接
+REDIS_PARAMS={"decode_responses":true}
 REDIS_HOST=
 REDIS_PORT=
 REDIS_PASSWORD=
 REDIS_DB=
+
+# redis sentinel 如果有REDIS_SENTINEL_SENTINELS则表示要进行redis sentinel连接
+REDIS_SENTINEL_PARAMS=
+REDIS_SENTINEL_SENTINELS=
+REDIS_SENTINEL_SERVICE_NAME=    # 必填
+
+# redis cluster 如果有REDIS_CLUSTER_NODES则表示要进行redis cluster连接
+REDIS_CLUSTER_PARAMS=
+REDIS_CLUSTER_NODES=
+# 集群没有db选项
+
+# elasticsearch 如果有ELASTICSEARCH_HOSTS则表示要进行elasticsearch连接
+ELASTICSEARCH_PARAMS=
+ELASTICSEARCH_HOSTS=
+
 
 # 以后会加入更多数据库支持
 ```
@@ -90,11 +106,20 @@ REDIS_DB=
 
 ```{.sourceCode .python}
 export = nonebot.require("nonebot_plugin_navicat")
+
 export.mysql_pool # mysql的
+
 export.pgsql_pool # postgresql的
-export.sqlite_pool #sqlite的
+
+export.sqlite_pool # sqlite的
+
 export.mongodb_client # mongodb的
+
 export.redis_client # redis的
+export.redis_sentinel
+export.redis_cluster
+
+export.elasticsearch # elasticsearch的
 ```
 
 ## 直接查询数据库 (0.2.0中已删除)
@@ -105,6 +130,10 @@ super mysql
 show databases
 ```
 ## 更新记录
+- v0.2.1 加入了对redis哨兵和集群的支持，对```elasticsearch```的支持
+
+
+
 - v0.2.0 使用 [databases](https://github.com/encode/databases/) 代替直接连接,有了广泛的通用性
 - 移除了直接命令行查询数据库的功能,迁移到了单独的一个插件里面 *[nonebot-plugin-super](https://github.com/synodriver/nonebot_plugin_super)*
 ## 特别感谢
