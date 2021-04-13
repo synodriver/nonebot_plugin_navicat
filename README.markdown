@@ -44,7 +44,10 @@ pip install nonebot-plugin-navicat[mongodb]
 ``` {.sourceCode .bash}
 pip install nonebot-plugin-navicat[redis]
 ```
-
+- 要使用elasticsearch
+``` {.sourceCode .bash}
+pip install nonebot-plugin-navicat[elasticsearch]
+```
 
 - 在 nonebot2 项目中设置 load_plugin()
 
