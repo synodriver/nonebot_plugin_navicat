@@ -12,7 +12,7 @@ pgsql_opened: bool = False
 
 if config.pgsql_host:
     pgsql_pool = Database(
-        f"postgresql://{config.pgsql_user}:{config.pgsql_password}@{config.pgsql_host}:{config.pgsql_port}")
+        f"postgresql://{config.pgsql_user}:{config.pgsql_password}@{config.pgsql_host}:{config.pgsql_port}/{config.pgsql_db}")
     nonebot.export().pgsql_pool = pgsql_pool
 
 
@@ -22,7 +22,7 @@ async def connect_to_pgsql():
     if config.pgsql_host:
         await pgsql_pool.connect()
         pgsql_opened = True
-        nonebot.logger.info("connect to postgresql")
+        nonebot.logger.opt(colors=True).info("<y>Connect to Postgresql</y>")
 
 
 @driver.on_shutdown
@@ -31,4 +31,4 @@ async def free_db():
     if pgsql_opened:
         await pgsql_pool.disconnect()
         pgsql_opened = False
-        nonebot.logger.info("disconnect to postgresql")
+        nonebot.logger.opt(colors=True).info("<y>Disconnect to Postgresql</y>")

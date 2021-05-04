@@ -21,7 +21,7 @@ async def connect_to_sqlite():
     if config.sqlite_host:
         await sqlite_pool.connect()
         sqlite_opened = True
-        nonebot.logger.info("connect to sqlite")
+        nonebot.logger.opt(colors=True).info("<y>Connect to Sqlite</y>")
 
 
 @driver.on_shutdown
@@ -30,4 +30,4 @@ async def free_db():
     if sqlite_opened:
         await sqlite_pool.disconnect()
         sqlite_opened = False
-        nonebot.logger.info("disconnect to sqlite")
+        nonebot.logger.opt(colors=True).info("<y>Disconnect to Sqlite</y>")

@@ -65,12 +65,14 @@ MYSQL_HOST=
 MYSQL_PORT=
 MYSQL_USER=
 MYSQL_PASSWORD=
+MYSQL_DB=
 
 # postgresql 如果有PGSQL_HOST则表示要进行postgresql连接
 PGSQL_HOST=
 PGSQL_PORT=
 PGSQL_USER=
 PGSQL_PASSWORD=
+PGSQL_DB=
 
 # sqlite 如果有SQLITE_HOST则表示要进行sqlite连接 这里是路径
 SQLITE_HOST=

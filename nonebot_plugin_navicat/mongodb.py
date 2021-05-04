@@ -25,7 +25,7 @@ async def connect_to_mongodb():
     global mongodb_opened
     if config.mongodb_host:
         mongodb_opened = True
-        nonebot.logger.info("connect to mongodb")
+        nonebot.logger.opt(colors=True).info("<y>Connect to Mongodb</y>")
 
 
 @driver.on_shutdown
@@ -34,4 +34,4 @@ async def free_db():
     if mongodb_opened:
         mongodb_client.close()
         mongodb_opened = False
-        nonebot.logger.info("disconnect to mongodb")
+        nonebot.logger.opt(colors=True).info("<y>Disconnect to Mongodb</y>")

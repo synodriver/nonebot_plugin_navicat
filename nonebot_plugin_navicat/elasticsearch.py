@@ -23,7 +23,7 @@ if AsyncElasticsearch and config.elasticsearch_hosts:
 async def connect_to_elasticsearch():
     if config.elasticsearch_hosts:
         if await elasticsearch.ping():
-            nonebot.logger.info("connect to elasticsearch")
+            nonebot.logger.opt(colors=True).info("<y>Connect to Elasticsearch</y>")
 
 
 @driver.on_shutdown
@@ -32,4 +32,4 @@ async def free_elasticsearch():
     if elasticsearch_opened:
         await elasticsearch.close()
         elasticsearch_opened = False
-        nonebot.logger.info("disconnect to elasticsearch")
+        nonebot.logger.opt(colors=True).info("<y>Disconnect to Elasticsearch</y>")

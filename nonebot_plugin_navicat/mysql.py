@@ -12,7 +12,7 @@ mysql_opened: bool = False
 
 if config.mysql_host:
     mysql_pool = Database(
-        f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}")
+        f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}")
     nonebot.export().mysql_pool = mysql_pool
 
 
@@ -22,7 +22,7 @@ async def connect_to_mysql():
     if config.mysql_host:
         await mysql_pool.connect()
         mysql_opened = True
-        nonebot.logger.info("connect to mysql")
+        nonebot.logger.opt(colors=True).info("<y>Connect to Mysql</y>")
 
 
 @driver.on_shutdown
@@ -31,4 +31,4 @@ async def free_db():
     if mysql_opened:
         await mysql_pool.disconnect()
         mysql_opened = False
-        nonebot.logger.info("disconnect to mysql")
+        nonebot.logger.opt(colors=True).info("<y>Disconnect to Mysql</y>")
