@@ -92,7 +92,6 @@ REDIS_DB=
 
 # redis sentinel 如果有REDIS_SENTINEL_SENTINELS则表示要进行redis sentinel连接
 REDIS_SENTINEL_PARAMS=
-REDIS_SENTINEL_SENTINELS=
 REDIS_SENTINEL_SERVICE_NAME=    # 必填
 
 # redis cluster 如果有REDIS_CLUSTER_NODES则表示要进行redis cluster连接

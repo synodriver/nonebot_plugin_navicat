@@ -52,8 +52,8 @@ async def free_db():
 
 redis_sentinel_opened: bool = False
 
-if redis and config.redis_sentinel_sentinels:
-    redis_sentinel_params = config.redis_sentinel_params or {}
+if redis and config.redis_sentinel_params:
+    redis_sentinel_params = config.redis_sentinel_params
     sentinel = Sentinel(**redis_sentinel_params)
     nonebot.export().redis_sentinel = sentinel
     redis_sentinel_opened = True
@@ -61,7 +61,7 @@ if redis and config.redis_sentinel_sentinels:
 
 @driver.on_startup
 async def connect_to_redis_sentinel():
-    if config.redis_sentinel_sentinels:
+    if config.redis_sentinel_params:
         master = sentinel.master_for(config.redis_sentinel_service_name)
         slave = sentinel.slave_for(config.redis_sentinel_service_name)
         if master.ping() and slave.ping():
@@ -84,8 +84,8 @@ async def free_redis_sentinel():
 
 redis_cluster_opened: bool = False
 
-if rediscluster and config.redis_cluster_nodes:
-    redis_cluster_params = config.redis_cluster_params or {}
+if rediscluster and config.redis_cluster_params:
+    redis_cluster_params = config.redis_cluster_params
     cluster = rediscluster.RedisCluster(**redis_cluster_params)
     nonebot.export().redis_cluster = cluster
     redis_cluster_opened = True
@@ -93,7 +93,7 @@ if rediscluster and config.redis_cluster_nodes:
 
 @driver.on_startup
 async def connect_to_redis_cluster():
-    if config.redis_cluster_nodes:
+    if config.redis_cluster_params:
         if cluster.ping():
             nonebot.logger.opt(colors=True).opt(colors=True).info("<y>Connect to Redis Cluster</y>")
 
