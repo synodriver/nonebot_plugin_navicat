@@ -14,7 +14,7 @@ config: nonebot.config.Config = driver.config
 
 mongodb_opened: bool = False
 
-if config.mongodb_host:
+if getattr(config, "mongodb_host", None):
     mongodb_client = motor_asyncio.AsyncIOMotorClient(
         f"mongodb://{config.mongodb_user}:{config.mongodb_password}@{config.mongodb_host}:{config.mongodb_port}")
     nonebot.export().mongodb_client = mongodb_client
@@ -23,7 +23,7 @@ if config.mongodb_host:
 @driver.on_startup
 async def connect_to_mongodb():
     global mongodb_opened
-    if config.mongodb_host:
+    if getattr(config, "mongodb_host", None):
         mongodb_opened = True
         nonebot.logger.opt(colors=True).info("<y>Connect to Mongodb</y>")
 

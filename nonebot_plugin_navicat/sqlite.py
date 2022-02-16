@@ -10,7 +10,7 @@ config: nonebot.config.Config = driver.config
 
 sqlite_opened: bool = False
 
-if config.sqlite_host:
+if getattr(config, "sqlite_host", None):
     sqlite_pool = Database(f"sqlite://{config.sqlite_host}")
     nonebot.export().sqlite_pool = sqlite_pool
 
@@ -18,7 +18,7 @@ if config.sqlite_host:
 @driver.on_startup
 async def connect_to_sqlite():
     global sqlite_opened
-    if config.sqlite_host:
+    if getattr(config, "sqlite_host", None):
         await sqlite_pool.connect()
         sqlite_opened = True
         nonebot.logger.opt(colors=True).info("<y>Connect to Sqlite</y>")

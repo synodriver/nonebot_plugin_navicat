@@ -134,6 +134,9 @@ super mysql
 show databases
 ```
 ## 更新记录
+- v0.2.3 修复beta2的bug
+
+
 - v0.2.1 加入了对redis哨兵和集群的支持，对```elasticsearch```的支持
 
 

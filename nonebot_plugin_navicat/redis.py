@@ -20,12 +20,12 @@ config: nonebot.config.Config = driver.config
 
 redis_opened: bool = False
 
-if redis and config.redis_host:
-    redis_params = config.redis_params or {}
+if redis and getattr(config, "redis_host", None):
+    redis_params = getattr(config, "redis_params", None) or {}
     redis_params.update(host=config.redis_host,
-                        port=config.redis_port,
-                        db=config.redis_db,
-                        password=config.redis_password)
+                        port=getattr(config, "redis_port", 6379),
+                        db=getattr(config, "redis_db", 0),
+                        password=getattr(config, "redis_password", None))
     redis_client = redis.Redis(**redis_params)
     nonebot.export().redis_client = redis_client
     redis_opened = True
@@ -33,7 +33,7 @@ if redis and config.redis_host:
 
 @driver.on_startup
 async def connect_to_redis():
-    if config.redis_host:
+    if getattr(config, "redis_host", None):
         ret = redis_client.ping()
         if ret:
             nonebot.logger.opt(colors=True).info("<y>Connect to Redis</y>")
@@ -52,7 +52,7 @@ async def free_db():
 
 redis_sentinel_opened: bool = False
 
-if redis and config.redis_sentinel_params:
+if redis and getattr(config, "redis_sentinel_params", None):
     redis_sentinel_params = config.redis_sentinel_params
     sentinel = Sentinel(**redis_sentinel_params)
     nonebot.export().redis_sentinel = sentinel
@@ -61,7 +61,7 @@ if redis and config.redis_sentinel_params:
 
 @driver.on_startup
 async def connect_to_redis_sentinel():
-    if config.redis_sentinel_params:
+    if getattr(config, "redis_sentinel_params", None):
         master = sentinel.master_for(config.redis_sentinel_service_name)
         slave = sentinel.slave_for(config.redis_sentinel_service_name)
         if master.ping() and slave.ping():
@@ -84,7 +84,7 @@ async def free_redis_sentinel():
 
 redis_cluster_opened: bool = False
 
-if rediscluster and config.redis_cluster_params:
+if rediscluster and getattr(config, "redis_cluster_params", None):
     redis_cluster_params = config.redis_cluster_params
     cluster = rediscluster.RedisCluster(**redis_cluster_params)
     nonebot.export().redis_cluster = cluster
@@ -93,7 +93,7 @@ if rediscluster and config.redis_cluster_params:
 
 @driver.on_startup
 async def connect_to_redis_cluster():
-    if config.redis_cluster_params:
+    if getattr(config, "redis_cluster_params", None):
         if cluster.ping():
             nonebot.logger.opt(colors=True).opt(colors=True).info("<y>Connect to Redis Cluster</y>")
 

@@ -10,7 +10,7 @@ config: nonebot.config.Config = driver.config
 
 pgsql_opened: bool = False
 
-if config.pgsql_host:
+if getattr(config, "pgsql_host", None):
     pgsql_pool = Database(
         f"postgresql://{config.pgsql_user}:{config.pgsql_password}@{config.pgsql_host}:{config.pgsql_port}/{config.pgsql_db}")
     nonebot.export().pgsql_pool = pgsql_pool
@@ -19,7 +19,7 @@ if config.pgsql_host:
 @driver.on_startup
 async def connect_to_pgsql():
     global pgsql_opened
-    if config.pgsql_host:
+    if getattr(config, "pgsql_host", None):
         await pgsql_pool.connect()
         pgsql_opened = True
         nonebot.logger.opt(colors=True).info("<y>Connect to Postgresql</y>")

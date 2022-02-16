@@ -2,11 +2,11 @@
 import asyncio
 
 import nonebot
-from nonebot.adapters.cqhttp import Bot
+from nonebot.adapters.onebot.v11 import Adapter
 
 nonebot.init(_env_file=r".env")
 driver = nonebot.get_driver()
-driver.register_adapter("cqhttp", Bot)
+driver.register_adapter(Adapter)
 nonebot.load_plugin("nonebot_plugin_navicat")
 
 app = nonebot.get_app()

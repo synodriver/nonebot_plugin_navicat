@@ -10,7 +10,7 @@ config: nonebot.config.Config = driver.config
 
 mysql_opened: bool = False
 
-if config.mysql_host:
+if getattr(config, "mysql_host", None):
     mysql_pool = Database(
         f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}")
     nonebot.export().mysql_pool = mysql_pool
@@ -19,7 +19,7 @@ if config.mysql_host:
 @driver.on_startup
 async def connect_to_mysql():
     global mysql_opened
-    if config.mysql_host:
+    if getattr(config, "mysql_host", None):
         await mysql_pool.connect()
         mysql_opened = True
         nonebot.logger.opt(colors=True).info("<y>Connect to Mysql</y>")

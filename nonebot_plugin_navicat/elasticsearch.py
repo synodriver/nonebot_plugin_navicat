@@ -11,9 +11,9 @@ config: nonebot.config.Config = driver.config
 
 elasticsearch_opened: bool = False
 
-if AsyncElasticsearch and config.elasticsearch_hosts:
-    elasticsearch_params = config.elasticsearch_params or {}
-    elasticsearch_params.update(hosts=config.elasticsearch_hosts)
+if AsyncElasticsearch and getattr(config, "elasticsearch_hosts", None):
+    elasticsearch_params = getattr(config, "elasticsearch_params", None) or {}
+    elasticsearch_params.update(hosts=getattr(config, "elasticsearch_hosts", None))
     elasticsearch = AsyncElasticsearch(**elasticsearch_params)
     nonebot.export().elasticsearch = elasticsearch
     elasticsearch_opened = True
@@ -21,7 +21,7 @@ if AsyncElasticsearch and config.elasticsearch_hosts:
 
 @driver.on_startup
 async def connect_to_elasticsearch():
-    if config.elasticsearch_hosts:
+    if getattr(config, "elasticsearch_hosts", None):
         if await elasticsearch.ping():
             nonebot.logger.opt(colors=True).info("<y>Connect to Elasticsearch</y>")
 
