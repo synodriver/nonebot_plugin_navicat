@@ -34,8 +34,7 @@ if redis and getattr(config, "redis_host", None):
 @driver.on_startup
 async def connect_to_redis():
     if getattr(config, "redis_host", None):
-        ret = redis_client.ping()
-        if ret:
+        if ret := redis_client.ping():
             nonebot.logger.opt(colors=True).info("<y>Connect to Redis</y>")
 
 
@@ -93,9 +92,8 @@ if rediscluster and getattr(config, "redis_cluster_params", None):
 
 @driver.on_startup
 async def connect_to_redis_cluster():
-    if getattr(config, "redis_cluster_params", None):
-        if cluster.ping():
-            nonebot.logger.opt(colors=True).opt(colors=True).info("<y>Connect to Redis Cluster</y>")
+    if getattr(config, "redis_cluster_params", None) and cluster.ping():
+        nonebot.logger.opt(colors=True).opt(colors=True).info("<y>Connect to Redis Cluster</y>")
 
 
 @driver.on_shutdown

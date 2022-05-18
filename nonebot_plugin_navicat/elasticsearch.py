@@ -21,9 +21,11 @@ if AsyncElasticsearch and getattr(config, "elasticsearch_hosts", None):
 
 @driver.on_startup
 async def connect_to_elasticsearch():
-    if getattr(config, "elasticsearch_hosts", None):
-        if await elasticsearch.ping():
-            nonebot.logger.opt(colors=True).info("<y>Connect to Elasticsearch</y>")
+    if (
+        getattr(config, "elasticsearch_hosts", None)
+        and await elasticsearch.ping()
+    ):
+        nonebot.logger.opt(colors=True).info("<y>Connect to Elasticsearch</y>")
 
 
 @driver.on_shutdown
