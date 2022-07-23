@@ -15,8 +15,13 @@ config: nonebot.config.Config = driver.config
 mongodb_opened: bool = False
 
 if getattr(config, "mongodb_host", None):
-    mongodb_client = motor_asyncio.AsyncIOMotorClient(
-        f"mongodb://{config.mongodb_user}:{config.mongodb_password}@{config.mongodb_host}:{config.mongodb_port}")
+    user, password = config.mongodb_user, config.mongodb_password
+    if user and password:
+        mongodb_client = motor_asyncio.AsyncIOMotorClient(
+            f"mongodb://{config.mongodb_user}:{config.mongodb_password}@{config.mongodb_host}:{config.mongodb_port}")
+    else:
+        mongodb_client = motor_asyncio.AsyncIOMotorClient(
+            f"mongodb://{config.mongodb_host}:{config.mongodb_port}")
     nonebot.export().mongodb_client = mongodb_client
 
 
