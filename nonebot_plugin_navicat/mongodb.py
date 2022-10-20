@@ -18,11 +18,13 @@ if getattr(config, "mongodb_host", None):
     user, password = config.mongodb_user, config.mongodb_password
     if user and password:
         mongodb_client = motor_asyncio.AsyncIOMotorClient(
-            f"mongodb://{config.mongodb_user}:{config.mongodb_password}@{config.mongodb_host}:{config.mongodb_port}")
+            f"mongodb://{config.mongodb_user}:{config.mongodb_password}@{config.mongodb_host}:{config.mongodb_port}"
+        )
     else:
         mongodb_client = motor_asyncio.AsyncIOMotorClient(
-            f"mongodb://{config.mongodb_host}:{config.mongodb_port}")
-    nonebot.export().mongodb_client = mongodb_client
+            f"mongodb://{config.mongodb_host}:{config.mongodb_port}"
+        )
+    # nonebot.export().mongodb_client = mongodb_client
 
 
 @driver.on_startup

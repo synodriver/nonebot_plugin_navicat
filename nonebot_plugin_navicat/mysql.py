@@ -12,8 +12,9 @@ mysql_opened: bool = False
 
 if getattr(config, "mysql_host", None):
     mysql_pool = Database(
-        f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}")
-    nonebot.export().mysql_pool = mysql_pool
+        f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}"
+    )
+    # nonebot.export().mysql_pool = mysql_pool
 
 
 @driver.on_startup

@@ -12,7 +12,7 @@ sqlite_opened: bool = False
 
 if getattr(config, "sqlite_host", None):
     sqlite_pool = Database(f"sqlite://{config.sqlite_host}")
-    nonebot.export().sqlite_pool = sqlite_pool
+    # nonebot.export().sqlite_pool = sqlite_pool
 
 
 @driver.on_startup

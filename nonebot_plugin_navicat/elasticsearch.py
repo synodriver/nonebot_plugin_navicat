@@ -15,7 +15,7 @@ if AsyncElasticsearch and getattr(config, "elasticsearch_hosts", None):
     elasticsearch_params = getattr(config, "elasticsearch_params", None) or {}
     elasticsearch_params.update(hosts=getattr(config, "elasticsearch_hosts", None))
     elasticsearch = AsyncElasticsearch(**elasticsearch_params)
-    nonebot.export().elasticsearch = elasticsearch
+    # nonebot.export().elasticsearch = elasticsearch
     elasticsearch_opened = True
 
 

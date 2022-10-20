@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
-packages = find_packages(exclude=('test', 'tests.*', "test*"))
+packages = find_packages(exclude=("test", "tests.*", "test*"))
 
 
 def get_dis():
@@ -13,7 +13,7 @@ def main():
     dis = get_dis()
     setup(
         name="nonebot-plugin-navicat",
-        version="0.2.3",
+        version="0.3.0rc1",
         url="https://github.com/synodriver/nonebot_plugin_navicat",
         packages=packages,
         keywords=["nonebot"],
@@ -25,16 +25,22 @@ def main():
         python_requires=">=3.7",
         install_requires=["nonebot2", "databases"],
         extras_require={
-            "all": ["redis", "redis-py-cluster",
-                    "motor",
-                    "aiomysql", "asyncpg", "aiosqlite",
-                    "elasticsearch", "aiohttp"],
+            "all": [
+                "redis",
+                "redis-py-cluster",
+                "motor",
+                "aiomysql",
+                "asyncpg",
+                "aiosqlite",
+                "elasticsearch",
+                "aiohttp",
+            ],
             "mysql": ["aiomysql"],
             "postgresql": ["asyncpg"],
             "sqlite": ["aiosqlite"],
             "mongodb": ["motor"],
             "redis": ["redis", "redis-py-cluster"],
-            "elasticsearch": ["elasticsearch", "aiohttp"]
+            "elasticsearch": ["elasticsearch", "aiohttp"],
         },
         license="GPLv3",
         classifiers=[
@@ -45,9 +51,9 @@ def main():
             "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",
             "Programming Language :: Python :: 3.9",
-            "Programming Language :: Python :: Implementation :: CPython"
+            "Programming Language :: Python :: Implementation :: CPython",
         ],
-        include_package_data=True
+        include_package_data=True,
     )
 
 

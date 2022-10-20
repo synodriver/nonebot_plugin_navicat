@@ -90,16 +90,16 @@ REDIS_PORT=
 REDIS_PASSWORD=
 REDIS_DB=
 
-# redis sentinel 如果有REDIS_SENTINEL_SENTINELS则表示要进行redis sentinel连接
+# redis sentinel 如果有REDIS_SENTINEL_PARAMS则表示要进行redis sentinel连接
 REDIS_SENTINEL_PARAMS=
 REDIS_SENTINEL_SERVICE_NAME=    # 必填
 
-# redis cluster 如果有REDIS_CLUSTER_NODES则表示要进行redis cluster连接
+# redis cluster 如果有REDIS_CLUSTER_PARAMS则表示要进行redis cluster连接
 REDIS_CLUSTER_PARAMS=
 REDIS_CLUSTER_NODES=
 # 集群没有db选项
 
-# elasticsearch 如果有ELASTICSEARCH_HOSTS则表示要进行elasticsearch连接
+# elasticsearch 如果有ELASTICSEARCH_PARAMS则表示要进行elasticsearch连接
 ELASTICSEARCH_PARAMS=
 ELASTICSEARCH_HOSTS=
 
@@ -109,7 +109,10 @@ ELASTICSEARCH_HOSTS=
 ## 导出给其他插件
 
 ```{.sourceCode .python}
-export = nonebot.require("nonebot_plugin_navicat")
+from nonebot import require
+
+require("nonebot_plugin_navicat")
+import nonebot_plugin_navicat as export # 兼容老写法，不至于大改
 
 export.mysql_pool # mysql的
 
@@ -134,6 +137,8 @@ super mysql
 show databases
 ```
 ## 更新记录
+- v0.3.0rc1 适配nonebot rc版本
+
 - v0.2.3 修复beta2的bug
 
 

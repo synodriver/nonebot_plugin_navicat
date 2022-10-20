@@ -12,8 +12,9 @@ pgsql_opened: bool = False
 
 if getattr(config, "pgsql_host", None):
     pgsql_pool = Database(
-        f"postgresql://{config.pgsql_user}:{config.pgsql_password}@{config.pgsql_host}:{config.pgsql_port}/{config.pgsql_db}")
-    nonebot.export().pgsql_pool = pgsql_pool
+        f"postgresql://{config.pgsql_user}:{config.pgsql_password}@{config.pgsql_host}:{config.pgsql_port}/{config.pgsql_db}"
+    )
+    # nonebot.export().pgsql_pool = pgsql_pool
 
 
 @driver.on_startup
