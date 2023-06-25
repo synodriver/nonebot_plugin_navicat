@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from nonebot.plugin import PluginMetadata
+from nonebot.config import Config
+
 from . import elasticsearch, mongodb, mysql, postgre, redis, sqlite
 
 if hasattr(elasticsearch, "elasticsearch"):
@@ -17,3 +20,12 @@ if hasattr(redis, "redis_cluster"):
     redis_cluster = redis.redis_cluster
 if hasattr(sqlite, "sqlite_pool"):
     sqlite_pool = sqlite.sqlite_pool
+
+
+__plugin_meta__ = PluginMetadata(
+    name="nonebot_plugin_navicat",
+    description="Nonebot数据库支持",
+    usage="被别的插件require使用",
+    config=Config,
+    extra={},
+)
