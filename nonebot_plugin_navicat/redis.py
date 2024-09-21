@@ -6,14 +6,11 @@ import nonebot
 
 try:
     import redis
-    from redis.sentinel import Sentinel
+    from redis.asyncio.sentinel import Sentinel
+    from redis.asyncio.cluster import RedisCluster
 except ImportError:
     redis = None
 
-try:
-    import rediscluster
-except ImportError:
-    rediscluster = None
 
 driver: nonebot.Driver = nonebot.get_driver()
 config: nonebot.config.Config = driver.config
@@ -28,7 +25,7 @@ if redis and getattr(config, "redis_host", None):
         db=getattr(config, "redis_db", 0),
         password=getattr(config, "redis_password", None),
     )
-    redis_client = redis.Redis(**redis_params)
+    redis_client = redis.asyncio.Redis(**redis_params)
     # nonebot.export().redis_client = redis_client
     redis_opened = True
 
@@ -36,7 +33,7 @@ if redis and getattr(config, "redis_host", None):
 @driver.on_startup
 async def connect_to_redis():
     if getattr(config, "redis_host", None):
-        ret = redis_client.ping()
+        ret = await redis_client.ping()
         if ret:
             nonebot.logger.opt(colors=True).info("<y>Connect to Redis</y>")
 
@@ -45,7 +42,7 @@ async def connect_to_redis():
 async def free_db():
     global redis_opened
     if redis_opened:
-        redis_client.close()
+        await redis_client.aclose()
         redis_opened = False
         nonebot.logger.opt(colors=True).info("<y>Disconnect to Redis</y>")
 
@@ -66,7 +63,7 @@ async def connect_to_redis_sentinel():
     if getattr(config, "redis_sentinel_params", None):
         master = sentinel.master_for(config.redis_sentinel_service_name)
         slave = sentinel.slave_for(config.redis_sentinel_service_name)
-        if master.ping() and slave.ping():
+        if await master.ping() and await slave.ping():
             nonebot.logger.opt(colors=True).info("<y>Connect to Redis Sentinel</y>")
 
 
@@ -76,8 +73,8 @@ async def free_redis_sentinel():
     if redis_sentinel_opened:
         master = sentinel.master_for(config.redis_sentinel_service_name)
         slave = sentinel.slave_for(config.redis_sentinel_service_name)
-        master.close()
-        slave.close()
+        await master.aclose()
+        await slave.aclose()
         redis_sentinel_opened = False
         nonebot.logger.opt(colors=True).info("<y>Disconnect to Redis Sentinel</y>")
 
@@ -86,9 +83,9 @@ async def free_redis_sentinel():
 
 redis_cluster_opened: bool = False
 
-if rediscluster and getattr(config, "redis_cluster_params", None):
+if redis and getattr(config, "redis_cluster_params", None):
     redis_cluster_params = config.redis_cluster_params
-    cluster = rediscluster.RedisCluster(**redis_cluster_params)
+    cluster = RedisCluster(**redis_cluster_params)
     # nonebot.export().redis_cluster = cluster
     redis_cluster_opened = True
 
@@ -96,7 +93,7 @@ if rediscluster and getattr(config, "redis_cluster_params", None):
 @driver.on_startup
 async def connect_to_redis_cluster():
     if getattr(config, "redis_cluster_params", None):
-        if cluster.ping():
+        if await cluster.ping():
             nonebot.logger.opt(colors=True).opt(colors=True).info(
                 "<y>Connect to Redis Cluster</y>"
             )
@@ -106,7 +103,7 @@ async def connect_to_redis_cluster():
 async def free_redis_cluster():
     global redis_cluster_opened
     if redis_cluster_opened:
-        cluster.close()
+        await cluster.aclose()
         redis_cluster_opened = False
         nonebot.logger.opt(colors=True).opt(colors=True).info(
             "<y>Disconnect to Redis Cluster</y>"
