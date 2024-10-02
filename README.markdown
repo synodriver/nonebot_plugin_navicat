@@ -137,6 +137,8 @@ super mysql
 show databases
 ```
 ## 更新记录
+- v0.4.0 **breaking** 使用异步redis库
+
 - v0.3.0rc1 适配nonebot rc版本
 
 - v0.2.3 修复beta2的bug
