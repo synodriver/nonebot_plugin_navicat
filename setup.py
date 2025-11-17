@@ -26,7 +26,7 @@ def main():
         install_requires=["nonebot2", "databases>=0.9.0"],
         extras_require={
             "all": [
-                "redis",
+                "redis>=5.0",
                 "motor",
                 "aiomysql",
                 "asyncpg",
@@ -38,7 +38,7 @@ def main():
             "postgresql": ["asyncpg"],
             "sqlite": ["aiosqlite"],
             "mongodb": ["motor"],
-            "redis": ["redis"],
+            "redis": ["redis>=5.0"],
             "elasticsearch": ["elasticsearch", "aiohttp"],
         },
         license="GPLv3",
@@ -52,6 +52,8 @@ def main():
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
             "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
+            "Programming Language :: Python :: 3.14",
             "Programming Language :: Python :: Implementation :: CPython",
         ],
         include_package_data=True,
