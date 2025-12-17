@@ -27,7 +27,7 @@ def main():
         extras_require={
             "all": [
                 "redis>=5.0",
-                "motor",
+                "pymongo>=4.15.5",
                 "aiomysql",
                 "asyncpg",
                 "aiosqlite",
@@ -37,7 +37,7 @@ def main():
             "mysql": ["aiomysql"],
             "postgresql": ["asyncpg"],
             "sqlite": ["aiosqlite"],
-            "mongodb": ["motor"],
+            "mongodb": ["pymongo>=4.15.5"],
             "redis": ["redis>=5.0"],
             "elasticsearch": ["elasticsearch", "aiohttp"],
         },

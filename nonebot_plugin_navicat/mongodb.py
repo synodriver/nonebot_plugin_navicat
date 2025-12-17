@@ -5,9 +5,9 @@
 import nonebot
 
 try:
-    from motor import motor_asyncio
+    from pymongo import AsyncMongoClient
 except ImportError:
-    motor_asyncio = None
+    AsyncMongoClient = None
 
 driver: nonebot.Driver = nonebot.get_driver()
 config: nonebot.config.Config = driver.config
@@ -17,11 +17,11 @@ mongodb_opened: bool = False
 if getattr(config, "mongodb_host", None):
     user, password = config.mongodb_user, config.mongodb_password
     if user and password:
-        mongodb_client = motor_asyncio.AsyncIOMotorClient(
+        mongodb_client = AsyncMongoClient(
             f"mongodb://{config.mongodb_user}:{config.mongodb_password}@{config.mongodb_host}:{config.mongodb_port}"
         )
     else:
-        mongodb_client = motor_asyncio.AsyncIOMotorClient(
+        mongodb_client = AsyncMongoClient(
             f"mongodb://{config.mongodb_host}:{config.mongodb_port}"
         )
     # nonebot.export().mongodb_client = mongodb_client
